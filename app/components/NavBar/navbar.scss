@@ -1,0 +1,291 @@
+@keyframes nav-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+// ============================================================
+// Cabeçalho (barra enxuta)
+// ============================================================
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    &__bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: var(--header-height);
+    }
+
+    &__brand {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        color: var(--color-text);
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+
+        span {
+            color: var(--color-text-muted);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    // No celular só o leitor de tela "vê" o texto; a partir do tablet vira pílula com "Menu"
+    &__menu-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        font-size: 0.92rem;
+        font-weight: 600;
+        line-height: 1;
+    }
+}
+
+.site-header__menu-button.icon-button {
+    @media (min-width: 768px) {
+        display: inline-flex;
+        gap: 0.5rem;
+        width: auto;
+        padding-inline: 1rem 1.15rem;
+        border-radius: 999px;
+
+        .site-header__menu-label {
+            position: static;
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            clip-path: none;
+        }
+    }
+}
+
+// ============================================================
+// Sidebar (menu lateral) e fundo escurecido
+// ============================================================
+.menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1150;
+    background: color-mix(in srgb, #000 60%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    // visibility só some depois que o fade termina
+    transition:
+        opacity var(--transition),
+        visibility 0s linear 0.22s;
+
+    &--open {
+        opacity: 1;
+        visibility: visible;
+        transition:
+            opacity var(--transition),
+            visibility 0s;
+    }
+}
+
+.menu-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: min(28rem, calc(100vw - 3rem));
+    padding:
+        max(1rem, env(safe-area-inset-top))
+        clamp(1rem, 4vw, 1.5rem)
+        max(1.5rem, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-left: 1px solid var(--color-border);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-card);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0.35s;
+
+    &--open {
+        transform: none;
+        visibility: visible;
+        transition:
+            transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s;
+    }
+
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__list {
+        display: grid;
+        gap: 0.85rem;
+    }
+}
+
+// Os cards entram um depois do outro quando a sidebar abre
+.menu-drawer--open .menu-drawer__list > li {
+    animation: nav-card-in 0.4s ease both;
+    animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+
+// ============================================================
+// Card de navegação
+// ============================================================
+.nav-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    height: 100%;
+    min-height: 7.5rem;
+    padding: clamp(1.15rem, 2.5vw, 1.5rem);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(
+        145deg,
+        var(--color-surface-raised),
+        var(--color-surface)
+    );
+    box-shadow: var(--shadow-card);
+    color: var(--color-text);
+    transition:
+        border-color var(--transition),
+        background-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+
+    // Linha dourada que "desenha" embaixo do card no hover/foco
+    &::after {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 2px;
+        background: var(--color-accent);
+        content: '';
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 3px;
+
+        &::after {
+            transform: scaleX(1);
+        }
+    }
+
+    // Card em destaque (Loja, no print)
+    &--featured {
+        border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    }
+
+    // Foto na metade direita; a máscara faz ela sumir para a esquerda,
+    // então funciona igual no tema claro e no escuro
+    &--with-image::before {
+        position: absolute;
+        inset: 0 0 0 38%;
+        z-index: -1;
+        background: var(--card-image) center / cover no-repeat;
+        content: '';
+        opacity: 0.85;
+        -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 60%);
+        mask-image: linear-gradient(90deg, transparent 0%, #000 60%);
+        transition:
+            opacity var(--transition),
+            transform 0.5s ease;
+    }
+
+    // Logos: aparecem inteiros, sem corte
+    &--contain::before {
+        inset: 0.75rem 0 0.75rem 38%;
+        background-position: right 1.25rem center;
+        background-size: contain;
+    }
+
+    // Mantém o texto longe da foto
+    &--with-image &__description {
+        max-width: 70%;
+    }
+
+    &__eyebrow {
+        color: var(--color-accent);
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        line-height: 1.5;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.2;
+    }
+
+    &__description {
+        color: var(--color-text-muted);
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+}
+
+@media (hover: hover) {
+    .nav-card:hover {
+        transform: translateY(-3px);
+        border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-border));
+        background-color: var(--color-surface-raised);
+        box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.16);
+
+        &::after {
+            transform: scaleX(1);
+        }
+    }
+
+    .nav-card--with-image:hover::before {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}

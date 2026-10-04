@@ -1,0 +1,72 @@
+.whatsapp-button {
+    // verde um pouco mais escuro que o oficial, para o texto branco ter contraste
+    --whatsapp: #1fa855;
+    --whatsapp-hover: #178a45;
+
+    position: fixed;
+    right: max(var(--space-edge), env(safe-area-inset-right));
+    bottom: max(var(--space-edge), env(safe-area-inset-bottom));
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-width: var(--size-whatsapp);
+    height: var(--size-whatsapp);
+    border-radius: 999px;
+    background: var(--whatsapp);
+    box-shadow: 0 0.75rem 1.75rem color-mix(in srgb, var(--whatsapp) 40%, transparent);
+    color: #fff;
+    font-size: 1.9rem;
+    transition:
+        transform var(--transition),
+        background-color var(--transition),
+        box-shadow var(--transition);
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 3px;
+    }
+
+    // No celular só o leitor de tela "vê" o texto; no desktop ele aparece
+    &__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1;
+    }
+}
+
+@media (min-width: 768px) {
+    .whatsapp-button {
+        padding-inline: 1.15rem 1.4rem;
+
+        &__label {
+            position: static;
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            clip-path: none;
+        }
+    }
+}
+
+@media (hover: hover) {
+    .whatsapp-button:hover {
+        transform: translateY(-2px);
+        background: var(--whatsapp-hover);
+    }
+}

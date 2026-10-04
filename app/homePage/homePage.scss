@@ -1,0 +1,130 @@
+.hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: calc(100vh - var(--header-height));
+    min-height: min(calc(100svh - var(--header-height)), 58rem);
+    padding-block: clamp(4rem, 12vh, 8rem) clamp(3rem, 9vh, 6rem);
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 72% 22%, var(--color-accent-soft), transparent 35rem),
+        linear-gradient(180deg, transparent 52%, var(--color-bg) 100%);
+
+    // Círculo decorativo (some quando há foto)
+    &::after {
+        position: absolute;
+        z-index: -1;
+        top: 10%;
+        right: calc(-1 * clamp(6rem, 12vw, 14rem));
+        width: clamp(18rem, 48vw, 46rem);
+        aspect-ratio: 1;
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+        box-shadow:
+            0 0 0 3rem color-mix(in srgb, var(--color-text) 2.5%, transparent),
+            0 0 0 6rem color-mix(in srgb, var(--color-text) 1.5%, transparent);
+        content: '';
+        pointer-events: none;
+    }
+
+    &--width-image::after {
+        display: none;
+    }
+
+    // Celular: foto no topo, escurecendo para baixo (como no print)
+    &--width-image::before {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, var(--color-bg) 8%, transparent) 0%,
+                var(--color-bg) 96%
+            ),
+            var(--hero-image) center top / cover no-repeat;
+        content: '';
+
+        // Tablet e desktop: foto à direita, texto à esquerda
+        @media (min-width: 768px) {
+            background:
+                linear-gradient(90deg, var(--color-bg) 6%, transparent 72%),
+                linear-gradient(180deg, transparent 62%, var(--color-bg) 100%),
+                var(--hero-image) right center / cover no-repeat;
+        }
+    }
+
+    &__content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: clamp(0.85rem, 2vw, 1.25rem);
+    }
+
+    &__content > .eyebrow {
+        font-size: clamp(0.82rem, 0.75rem + 0.2vw, 0.9rem);
+    }
+
+    &__name {
+        max-width: 15ch;
+        font-size: clamp(3rem, 1.5rem + 7.5vw, 7.25rem);
+        font-weight: 600;
+        letter-spacing: -0.06em;
+        line-height: 1;
+        text-wrap: balance;
+    }
+
+    &__description {
+        max-width: 38rem;
+        color: var(--color-text-muted);
+        font-size: clamp(1rem, 1.8vw, 1.15rem);
+        line-height: 1.8;
+    }
+
+    &__credentials {
+        margin-top: 0.35rem;
+        max-width: 30rem;
+        color: var(--color-accent);
+        font-size: clamp(0.78rem, 0.72rem + 0.2vw, 0.85rem);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        line-height: 1.8;
+        text-transform: uppercase;
+    }
+}
+
+// Celular deitado: pouca altura, não forçar a tela inteira
+@media (max-height: 520px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding-block: 5rem 3rem;
+    }
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    padding-block: clamp(3.5rem, 9vw, 7.5rem);
+    text-align: center;
+
+    &__title {
+        max-width: 48rem;
+        font-size: clamp(1.9rem, 1.2rem + 3.6vw, 3.65rem);
+        font-weight: 600;
+        letter-spacing: -0.055em;
+        line-height: 1.12;
+        text-wrap: balance;
+    }
+
+    &__text {
+        max-width: 39rem;
+        color: var(--color-text-muted);
+        font-size: clamp(0.98rem, 1.7vw, 1.08rem);
+        line-height: 1.85;
+        text-wrap: pretty;
+    }
+}
