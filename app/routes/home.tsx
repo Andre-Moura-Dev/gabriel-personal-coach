@@ -3,8 +3,8 @@ import HomePage from '../homePage/homePage'
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "GN | Performance" },
-    { name: "description", content: "Treinamento personalizado para desenvolver força, capacidades físicas e uma performance que se sustenta dentro e fora da academia.", },
+    { title: "Coach Gabriel | Treinamento Personalizado" },
+    { name: "description", content: "Treinamento personalizado para emagrecimento, ganho de massa muscular e qualidade de vida, com avaliação completa e resultados seguros.", },
   ];
 }
 

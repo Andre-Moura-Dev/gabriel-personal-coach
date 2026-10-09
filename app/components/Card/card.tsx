@@ -3,7 +3,6 @@ import { LuActivity, LuDumbbell, LuTarget } from "react-icons/lu";
 import './card.scss';
 
 type CardItem = {
-    id: string;
     number: string;
     icon: ReactNode;
     title: string;
@@ -13,21 +12,18 @@ type CardItem = {
 
 const CARDS: CardItem[] = [
     {
-        id: 'consultoria',
         number: '01',
         icon: <LuTarget />,
         title: 'Treinar com direção',
         description: 'Tenha um plano alinhado ao seu objetivo, nível de experiência e rotina real.',
     },
     {
-        id: 'avaliacao',
         number: '02',
         icon: <LuDumbbell />,
-        title: 'Construa força',
+        title: 'Treine com segurança',
         description: 'Construa uma base forte com estrutura, progressão e propósito em cada sessão.'
     },
     {
-        id: 'performance',
         number: '03',
         icon: <LuActivity />,
         title: 'Ampliar capacidade física',
@@ -37,12 +33,17 @@ const CARDS: CardItem[] = [
 
 export default function Card() {
     return (
-        <section className="container py-4">
+        <section id="consultoria" className="container py-4 consultation" aria-labelledby="consultoria-title">
+            <header className="consultation__header">
+                <span className="eyebrow">Consultoria online</span>
+                <h2 id="consultoria-title" className="consultation__title text-gradient">
+                    Um plano alinhado à sua rotina e aos seus objetivos.
+                </h2>
+            </header>
             <div className="row g-3">
-                {CARDS.map(({ id, number, icon, title, description, image }) => (
+                {CARDS.map(({ number, icon, title, description, image }) => (
                     <div key={number} className="col-12 col-lg-4">
                         <article
-                            id={id}
                             className={`feature-card ${image ? 'feature-card--with-image' : ''}`}
                             style={image ? ({ '--card-image': `url(${image})` } as CSSProperties) : undefined}
                         >

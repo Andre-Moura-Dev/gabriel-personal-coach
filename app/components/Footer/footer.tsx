@@ -6,12 +6,10 @@ type FooterLink = {
     external?: boolean;
 };
 
-// Mantenha estes links iguais aos do NavBar
 const FOOTER_LINKS: FooterLink[] = [
-    { label: 'Consultoria online', href: '#consultoria' },
-    { label: 'Avaliação física', href: '#avaliacao' },
-    { label: 'Loja de Suplementos', href: 'https://LINK_DA_LOJA', external: true },
-    { label: 'Instagram', href: 'https://instagram.com/SEU_PERFIL', external: true },
+    { label: 'Consultoria online', href: '/#consultoria' },
+    { label: 'Avaliação presencial', href: '/#avaliacao' },
+    { label: 'Instagram', href: 'https://www.instagram.com/coach_gaabriieel_/', external: true },
 ];
 
 export default function Footer() {
@@ -21,8 +19,9 @@ export default function Footer() {
         <footer className="site-footer">
             <div className="site-footer__inner container">
                 <div className="site-footer__brand">
-                    <a className="site-footer__logo" href="/" aria-label="GN Performance - página inicial">
-                        GN <span>Performance</span>
+                    <a className="site-footer__logo" href="/" aria-label="Coach Gabriel - página inicial">
+                        <img src="/images/logo-coach-gabriel.jpg" alt="" />
+                        <span className="site-footer__logo-name">COACH GABRIEL</span>
                     </a>
                     <p className="site-footer__tagline">
                         Treinos com propósito, acompanhamento de perto e evolução
@@ -52,7 +51,7 @@ export default function Footer() {
 
             <div className="site-footer__bottom">
                 <div className="container">
-                    <p>© {year} Gabriel Negreiros. Todos os direitos reservados.</p>
+                    <p>© {year} Coach Gabriel. Todos os direitos reservados.</p>
                 </div>
             </div>
         </footer>

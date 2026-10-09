@@ -1,18 +1,12 @@
 import { FaWhatsapp } from "react-icons/fa";
+import { WHATSAPP_HREF } from './whatsAppLink';
 import './whatsAppButton.scss';
 
-const WHATSAPP_NUMBER = '(61)998321-6289';
-const WHATSAPP_MESSAGE = 'Olá, Gabriel! Vim pelo site e gostaria de saber mais sobre o treinamento.';
-
 export default function WhatsAppButton() {
-    if (!WHATSAPP_NUMBER) return null;
-
-    const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
-
     return (
         <a
             className="whatsapp-button"
-            href={href}
+            href={WHATSAPP_HREF}
             target="_blank"
             rel="noopener noreferrer"
         >

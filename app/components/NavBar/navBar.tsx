@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, type CSSProperties } from 'react';
+import { useEffect, useState, useRef, type CSSProperties, type MouseEvent } from 'react';
 import { LuMenu, LuX } from 'react-icons/lu';
 import ThemeToggle from '../ThemeToggle/themeToggle';
 import './navbar.scss';
@@ -19,27 +19,19 @@ const NAV_ITEMS: NavBarItem[] = [
         eyebrow: 'Quero conhecer mais',
         title: 'Consultoria online',
         description: 'Treino, dieta, aplicativo, suporte e retorno.',
-        href: '#consultoria',
+        href: '/#consultoria',
     },
     {
         eyebrow: 'Entenda seu ponto de partida',
-        title: 'Avaliação física',
-        description: 'Avaliação presencial com retorno para acompanhar sua evolução.',
-        href: '#avaliacao',
+        title: 'Avaliação presencial',
+        description: 'Com retorno para acompanhar sua evolução.',
+        href: '/#avaliacao',
     },
     {
-        eyebrow: 'Compre online',
-        title: 'Loja de Suplementos',
-        description: 'Apex Suplementos',
-        href: 'https://LINK_DA_LOJA',
-        external: true,
-        featured: true,
-    },
-    {
-        eyebrow: 'Nos acompanhe',
+        eyebrow: 'Me acompanhe',
         title: 'Instagram',
         description: 'Siga o perfil nas redes sociais.',
-        href: 'https://instagram.com/SEU_PERFIL',
+        href: 'https://www.instagram.com/coach_gaabriieel_/',
         external: true,
     },
 ];
@@ -62,12 +54,12 @@ export default function Navbar() {
 
     useEffect(() => {
         if (!open) return;
-        closeButtonRef.current?.focus();
+        closeButtonRef.current?.focus({ preventScroll: true });
 
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setOpen(false);
-                menuButtonRef.current?.focus();
+                menuButtonRef.current?.focus({ preventScroll: true });
             }
         };
         document.addEventListener('keydown', onKeyDown);
@@ -90,32 +82,41 @@ export default function Navbar() {
 
     function closeMenuAndFocusButton() {
         closeMenu();
-        menuButtonRef.current?.focus();
+        menuButtonRef.current?.focus({ preventScroll: true });
+    }
+
+    function goToTop(event: MouseEvent<HTMLAnchorElement>) {
+        if (
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey ||
+            window.location.pathname !== '/'
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+        if (window.location.hash !== '#inicio') {
+            window.history.pushState(null, '', '/#inicio');
+        }
+
+        const scrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = 'auto';
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        requestAnimationFrame(() => {
+            document.documentElement.style.scrollBehavior = scrollBehavior;
+        });
     }
 
     return (
         <>
-            <header className='site-header'>
+            <header id='top' className='site-header'>
                 <div className='site-header__bar container'>
-                    <a
-                        className='site-header__brand'
-                        href='/'
-                        onClick={(event) => {
-                            if (
-                                event.button !== 0 ||
-                                event.metaKey ||
-                                event.ctrlKey ||
-                                event.shiftKey ||
-                                event.altKey
-                            ) {
-                                return;
-                            }
-
-                            event.preventDefault();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                    >
-                        GN <span>Performance</span>
+                    <a className='site-header__brand' href='/#top' onClick={goToTop}>
+                        <img src='/images/logo-coach-gabriel.jpg' alt='' />
+                        <span className='site-header__brand-name'>COACH GABRIEL</span>
                     </a>
 
                     <div className='site-header__actions'>
@@ -142,8 +143,6 @@ export default function Navbar() {
                 aria-hidden='true'
             />
 
-            {/* A sidebar fica fora do <header> de propósito: o blur do header
-                prenderia um elemento fixed dentro dele */}
             <nav
                 id='menu-principal'
                 className={`menu-drawer ${open ? 'menu-drawer--open' : ''}`}
