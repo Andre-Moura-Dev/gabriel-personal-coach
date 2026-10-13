@@ -252,6 +252,62 @@
         var(--color-surface)
     );
 
+    &__summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 4px;
+            border-radius: var(--radius-lg);
+        }
+
+        .assessment-card__title {
+            margin: 0;
+        }
+    }
+
+    &__chevron {
+        flex: 0 0 auto;
+        color: var(--color-accent);
+        font-size: 1.25rem;
+        transition: transform var(--transition);
+    }
+
+    &[open] &__chevron {
+        transform: rotate(180deg);
+    }
+
+    &__content {
+        display: grid;
+        gap: 0.85rem;
+        padding-top: 1rem;
+    }
+
+    &[open] &__content {
+        animation: assessment-open 0.25s ease both;
+    }
+
+    @keyframes assessment-open {
+        from {
+            opacity: 0;
+            transform: translateY(-0.25rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
     &__title {
         margin-bottom: 0.8rem;
         color: var(--color-accent);
@@ -295,4 +351,13 @@
         color: var(--color-text);
         font-weight: 500;
     }
+}
+
+.assessment__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    max-width: 46rem;
+    margin-inline: auto;
 }

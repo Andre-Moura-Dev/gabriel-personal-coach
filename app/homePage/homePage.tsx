@@ -5,6 +5,8 @@ import BackToTop from "../components/BackToTop/backToTop";
 import WhatsAppButton from "../components/WhatsAppButton/whatsAppButton";
 import { WHATSAPP_HREF } from "../components/WhatsAppButton/whatsAppLink";
 import Footer from "../components/Footer/footer";
+import { LuChevronDown } from "react-icons/lu";
+
 import './homePage.scss';
 
 const HERO_IMAGE = '/images/coach-gabriel.png';
@@ -143,16 +145,29 @@ export default function HomePage() {
 
                     <div className="assessment__grid">
                         {ASSESSMENTS.map(({ title, description, details, note }) => (
-                            <article className="assessment-card" key={title}>
-                                <h3 className="assessment-card__title">{title}</h3>
-                                <p className="assessment-card__description">{description}</p>
-                                <ul className="assessment-card__details">
-                                    {details.map((detail) => <li key={detail}>{detail}</li>)}
-                                </ul>
-                                {note && <p className="assessment-card__note">{note}</p>}
-                            </article>
+                            <details 
+                                className="assessment-card"
+                                key={title}
+                                name="assessment"
+                            >
+
+                                <summary className="assessment-card__summary">
+                                    <h3 className="assessment-card__title">{title}</h3>
+                                    <LuChevronDown className="assessment-card__chevron" aria-hidden="true" />
+                                </summary>
+
+                                <div className="assessment-card__content">
+                                    <p className="assessment-card__description">{description}</p>
+                                    <ul className="assessment-card__details">
+                                        {details.map((detail) => <li key={detail}>{detail}</li> )}
+                                    </ul>
+                                    {note && <p className="assessment-card__note">{note}</p>}
+                                </div>
+
+                            </details>
                         ))}
                     </div>
+
                 </section>
             </main>
 
