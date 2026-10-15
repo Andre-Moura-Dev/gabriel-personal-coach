@@ -1,11 +1,14 @@
 import type { CSSProperties } from "react";
 import Navbar from "../components/NavBar/navBar";
-import Card from "../components/Card/card";
+import Card, { CARD_ITEMS } from "../components/Card/card";
 import BackToTop from "../components/BackToTop/backToTop";
 import WhatsAppButton from "../components/WhatsAppButton/whatsAppButton";
+import Footer, { FOOTER_ITEMS } from "../components/Footer/footer";
 import { WHATSAPP_HREF } from "../components/WhatsAppButton/whatsAppLink";
-import Footer from "../components/Footer/footer";
 import { LuChevronDown } from "react-icons/lu";
+import type { NavBarItem } from "../types/NavBar";
+import type { CardItem } from "../types/Card";
+import type { FooterItem } from "../types/Footer";
 
 import './homePage.scss';
 
@@ -21,6 +24,7 @@ const ASSESSMENTS = [
             'Rotina e estilo de vida: sono, trabalho, estresse e hábitos diários.',
             'Objetivos: emagrecer, ganhar massa muscular ou ter mais saúde, considerando o tempo disponível.',
         ],
+        image: '',
         note: 'Objetivo: garantir segurança, evitar lesões e criar um treino 100% personalizado.',
     },
     {
@@ -31,6 +35,7 @@ const ASSESSMENTS = [
             'Gordura visceral (gordura nos órgãos abdominais).',
             'Nível de hidratação e taxa metabólica basal (calorias gastas em repouso).',
         ],
+        image: '',
         note: 'Preparo: jejum leve de 2 a 4 horas, sem álcool ou cafeína no dia anterior e sem exercícios intensos antes do teste.',
     },
     {
@@ -42,6 +47,7 @@ const ASSESSMENTS = [
             'Não sofre alterações pelo consumo de água ou retenção de líquidos, ao contrário da bioimpedância.',
             'Ajuda a identificar em quais regiões o aluno está perdendo ou acumulando gordura.',
         ],
+        image: '',
     },
     {
         title: 'Avaliação postural',
@@ -50,6 +56,7 @@ const ASSESSMENTS = [
             'Identifica músculos que precisam ser alongados por estarem tensos.',
             'Aponta músculos que precisam ser fortalecidos por estarem fracos.',
         ],
+        image: '',
         note: 'O objetivo é orientar treinos mais seguros e sem dor.',
     },
     {
@@ -62,6 +69,7 @@ const ASSESSMENTS = [
             'Supino reto: força de empurrar (peito, ombros e tríceps).',
             'Puxada alta: força de puxar (costas e bíceps).',
         ],
+        image: '',
         note: 'Os resultados ajudam a calcular a porcentagem de carga adequada para treinos de hipertrofia ou força, acompanhar a evolução e identificar desequilíbrios musculares que podem favorecer lesões.',
     },
     {
@@ -73,6 +81,7 @@ const ASSESSMENTS = [
             'Mostra mudanças na definição e no desenho corporal que a balança não registra.',
             'Ajuda a visualizar e comprovar a evolução ao longo do processo.',
         ],
+        image: ''
     },
     {
         title: 'Avaliação de resistência',
@@ -83,6 +92,7 @@ const ASSESSMENTS = [
             'Mostra a resposta do coração ao esforço e a velocidade de recuperação.',
             'Permite criar zonas de frequência cardíaca para treinos aeróbicos individualizados.',
         ],
+        image: '/images/imagem_resistencia.jpeg'
     },
 ];
 
@@ -132,7 +142,9 @@ export default function HomePage() {
                     </p>
                 </section>
 
-                <Card />
+                <Card 
+                    items={CARD_ITEMS}
+                />
 
                 <section id="avaliacao" className="assessment container">
                     <header className="assessment__header">
@@ -144,7 +156,7 @@ export default function HomePage() {
                     </header>
 
                     <div className="assessment__grid">
-                        {ASSESSMENTS.map(({ title, description, details, note }) => (
+                        {ASSESSMENTS.map(({ title, description, details, note, image }) => (
                             <details 
                                 className="assessment-card"
                                 key={title}
@@ -157,6 +169,16 @@ export default function HomePage() {
                                 </summary>
 
                                 <div className="assessment-card__content">
+
+                                    {image && (
+                                        <img
+                                            className="assessment-card__image"
+                                            src={image}
+                                            alt={title}
+                                            loading="lazy"
+                                        />
+                                    )}
+
                                     <p className="assessment-card__description">{description}</p>
                                     <ul className="assessment-card__details">
                                         {details.map((detail) => <li key={detail}>{detail}</li> )}
@@ -166,12 +188,24 @@ export default function HomePage() {
 
                             </details>
                         ))}
+
+                        <a
+                            className="hero__cta"
+                            href={WHATSAPP_HREF}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Quer agendar sua aula? Clique aqui
+                        </a>
+
                     </div>
 
                 </section>
             </main>
 
-            <Footer />
+            <Footer 
+                items={FOOTER_ITEMS}
+            />
 
             <BackToTop />
             <WhatsAppButton />

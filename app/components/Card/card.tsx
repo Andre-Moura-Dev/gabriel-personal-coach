@@ -1,16 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
 import { LuActivity, LuDumbbell, LuTarget } from "react-icons/lu";
+import type { CardProps, CardItem } from "../../types/Card";
 import './card.scss';
 
-type CardItem = {
-    number: string;
-    icon: ReactNode;
-    title: string;
-    description: string;
-    image?: string;
-}
-
-const CARDS: CardItem[] = [
+export const CARD_ITEMS: CardItem[] = [
     {
         number: '01',
         icon: <LuTarget />,
@@ -31,7 +24,7 @@ const CARDS: CardItem[] = [
     }
 ];
 
-export default function Card() {
+export default function Card({ items }: CardProps) {
     return (
         <section id="consultoria" className="container py-4 consultation" aria-labelledby="consultoria-title">
             <header className="consultation__header">
@@ -41,7 +34,7 @@ export default function Card() {
                 </h2>
             </header>
             <div className="row g-3">
-                {CARDS.map(({ number, icon, title, description, image }) => (
+                {items.map(({ number, icon, title, description, image }) => (
                     <div key={number} className="col-12 col-lg-4">
                         <article
                             className={`feature-card ${image ? 'feature-card--with-image' : ''}`}

@@ -1,18 +1,8 @@
 import { useEffect, useState, useRef, type CSSProperties, type MouseEvent } from 'react';
 import { LuMenu, LuX } from 'react-icons/lu';
+import type { NavBarItem, NavBarProps } from '../../types/NavBar';
 import ThemeToggle from '../ThemeToggle/themeToggle';
 import './navbar.scss';
-
-type NavBarItem = {
-    eyebrow: string;
-    title: string;
-    description: string;
-    href: string;
-    external?: boolean;
-    image?: string;
-    imageFit?: 'cover' | 'contain';
-    featured?: boolean;
-};
 
 const NAV_ITEMS: NavBarItem[] = [
     {
