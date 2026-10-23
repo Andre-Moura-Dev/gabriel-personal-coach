@@ -298,8 +298,9 @@
 
     &__image {
         display: block;
-        width: min(100%, 24rem);
-        height: clamp(12rem, 45vw, 20rem);
+        width: 100%;
+        max-width: 24rem;
+        height: auto;
         justify-self: center;
         border-radius: var(--radius-md);
         object-fit: contain;
@@ -373,4 +374,15 @@
     align-items: start;
     max-width: 46rem;
     margin-inline: auto;
+}
+
+.assessment-card__image {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 24rem;
+    height: auto;
+    max-height: none;
+    padding: 11px;
+    margin-inline: auto;
+    object-fit: contain;
 }

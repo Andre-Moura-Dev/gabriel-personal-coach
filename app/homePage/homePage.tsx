@@ -69,7 +69,7 @@ const ASSESSMENTS = [
             'Supino reto: força de empurrar (peito, ombros e tríceps).',
             'Puxada alta: força de puxar (costas e bíceps).',
         ],
-        image: '',
+        image: '/images/avaliação_força.jpeg',
         note: 'Os resultados ajudam a calcular a porcentagem de carga adequada para treinos de hipertrofia ou força, acompanhar a evolução e identificar desequilíbrios musculares que podem favorecer lesões.',
     },
     {
