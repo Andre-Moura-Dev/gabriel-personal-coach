@@ -47,7 +47,7 @@ const ASSESSMENTS = [
             'Não sofre alterações pelo consumo de água ou retenção de líquidos, ao contrário da bioimpedância.',
             'Ajuda a identificar em quais regiões o aluno está perdendo ou acumulando gordura.',
         ],
-        image: '',
+        image: '/images/7_dobras.png',
     },
     {
         title: 'Avaliação postural',
